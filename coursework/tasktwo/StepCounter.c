@@ -8,6 +8,7 @@ int counter = 0;
 char buffer[10];
 char choice;
 char *filename = NULL;
+int temp;
 
 int main(){
     /*success criteria:
@@ -26,39 +27,39 @@ int main(){
         printf("Menu Options:\nA: Specify the filename to be imported\nB: Display the total number of records in the file\nC: Find the date and time of the timeslot with the fewest steps\nD: Find the date and time of the timeslot with the largest number of steps\nE: Find the mean step count of all the records in the file\nF: Find the longest continuous period where the step count is above 500 steps\nQ: Quit\n");
         scanf("%c", tolower(choice));
 
-        //takes the name of the file as an input
+        //gets the new file name, opens the file, reads it, stores the data in an array, closes the file
         if (choice = "a"){
             printf("Input filename:\n");
             scanf("%s", filename);
-        }
-        //open the file
-        FILE *file = open_file(filename, "r");
+            FILE *file = open_file(filename, "r");
 
-        int buffer_size = 100;
-        char line_buffer[buffer_size];
-        counter = 0;
+            int buffer_size = 100;
+            char line_buffer[buffer_size];
+            counter = 0;
+            //reads the data from the file into the array
+            while (fgets(line_buffer, buffer_size, file) != NULL){
 
-        while (fgets(line_buffer, buffer_size, file) != NULL){
+                //splits line into date, time and step count, stores these in 3d dataArray and stores step count as buffer to cast to int
+                tokeniseRecord(line_buffer, ",", dataArray[counter].date, dataArray[counter].time, buffer);
 
-        //splits line into date, time and step count, stores these in 3d dataArray and stores step count as buffer to cast to int
-        tokeniseRecord(line_buffer, ",", dataArray[counter].date, dataArray[counter].time, buffer);
-
-        //casts buffer to int so step count can be stored
-        dataArray[counter].steps = atoi(buffer);
+                //casts buffer to int so step count can be stored
+                dataArray[counter].steps = atoi(buffer);
         
-        counter++;
-        }
-
-
-        if (choice = "a"){
-            //prevents option a being unrecognised
-            continue;
+                counter++;
+            }
         }
         else if (choice = "b"){
             printf("Total records: %i", counter);
         }
         else if (choice = "c"){
             //loop each item in array, from index 0 to counter, linear search for lowest value, print date & time at this index
+            temp = 99999;
+            for(int i=0;i<counter;i++){
+                if (dataArray[i].steps<temp){
+                    temp = dataArray[i].steps;
+                    //save the index
+                }
+            }
         }
         else if (choice = "d"){
             //same as c but find largest value
@@ -67,7 +68,7 @@ int main(){
             //loop each item in array, index 0 to counter, adding step counts then divide by counter, round as appropriate (DO NOT TRUNCATE)
         }
         else if (choice = "f"){
-            //todo
+            //todo: find the longest period where steps is over 500
         }
         else if (choice = "q"){
             //todo return 0 and quit
