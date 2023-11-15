@@ -9,6 +9,7 @@ char buffer[10];
 char choice;
 char *filename = NULL;
 int temp;
+int savedIndex;
 
 int main(){
     /*success criteria:
@@ -47,6 +48,7 @@ int main(){
         
                 counter++;
             }
+            fclose(file);
         }
         else if (choice = "b"){
             printf("Total records: %i", counter);
@@ -57,15 +59,28 @@ int main(){
             for(int i=0;i<counter;i++){
                 if (dataArray[i].steps<temp){
                     temp = dataArray[i].steps;
-                    //save the index
+                    savedIndex = i;
                 }
+                printf("Fewest steps: %s %s", dataArray[savedIndex].date, dataArray[savedIndex].time);
             }
         }
         else if (choice = "d"){
-            //same as c but find largest value
+            temp = -1;
+            for(int i=0;i<counter;i++){
+                if (dataArray[i].steps>temp){
+                    temp = dataArray[i].steps;
+                    savedIndex = i;
+                }
+                printf("Largest steps: %s %s", dataArray[savedIndex].date, dataArray[savedIndex].time);
+            }
         }
         else if (choice = "e"){
             //loop each item in array, index 0 to counter, adding step counts then divide by counter, round as appropriate (DO NOT TRUNCATE)
+            temp = 0;
+            for(int i=0; i<counter; i++){
+                temp += dataArray[i].steps;
+            }
+            printf("KIM ROUND THIS NUMBER\nMean step count: %i", temp/counter);
         }
         else if (choice = "f"){
             //todo: find the longest period where steps is over 500
