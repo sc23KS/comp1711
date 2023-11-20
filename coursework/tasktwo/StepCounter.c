@@ -84,6 +84,11 @@ int main(){
         }
         else if (choice = "f"){
             //todo: find the longest period where steps is over 500
+            //find streaks of 500+ steps, time taken and index where longest streak starts
+            temp = 0;
+            for(int i=0; i<counter; i++){
+
+            }
         }
         else if (choice = "q"){
             //todo return 0 and quit
