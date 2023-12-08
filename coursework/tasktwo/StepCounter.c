@@ -125,9 +125,7 @@ int main(){
             printf("Longest period end: %s %s", dataArray[longestStreakStart+longestStreak].date, dataArray[longestStreakStart+longestStreak].time);
         }
         else if (choice == 113){ //q
-            //todo return 0 and quit
             return 0;
-            break; //is this necessary? does "return 0" end the program?
         }
         else{
             printf("Invalid input, try again\n");
