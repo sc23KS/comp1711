@@ -1,18 +1,23 @@
 #include "FitnessDataStruct.h"
 
+
 //struct, helper function and file function all moved to header
 //add global variables (file names & array)
 
 FITNESS_DATA dataArray[10000];
 int counter = 0;
 char buffer[10];
-char *choice = "u";
+int choice = 'u';
 char *filename = "FitnessData_2023.csv";
 int temp;
 int savedIndex;
 
 int main(){
-    /*success criteria:
+    /*
+    important stuff:
+    - int choice = 'u' scanf(" %i", &choice) if (choice = 'x') all use ascii values
+    --> cast input from ^ scanf from char to ascii
+    success criteria:
     - make menu
     - cope with incorrect file name
     - display total number of records
@@ -28,10 +33,12 @@ int main(){
     //make menu loop until quit is selected
     while(1){
         printf("Menu Options:\nA: Specify the filename to be imported\nB: Display the total number of records in the file\nC: Find the date and time of the timeslot with the fewest steps\nD: Find the date and time of the timeslot with the largest number of steps\nE: Find the mean step count of all the records in the file\nF: Find the longest continuous period where the step count is above 500 steps\nQ: Quit\n");
-        scanf("%c", choice); //CAST CHOICE VAR TO LOWERCASE
+        printf("test2\n");
+        scanf(" %i", &choice); //CAST CHOICE VAR TO LOWERCASE
+        printf("%i", choice);
 
         //gets the new file name, opens the file, reads it, stores the data in an array, closes the file
-        if (choice == "a"){
+        if (choice == 'a'){
             printf("Input filename:\n");
             scanf("%s", filename);
             FILE *file = open_file(filename, "r");
@@ -52,10 +59,11 @@ int main(){
             }
             fclose(file);
         }
-        else if (choice == "b"){
-            printf("Total records: %i", counter);
+        else if (choice == 'b'){
+            printf("test");
+            //printf("Total records: %i", counter);
         }
-        else if (choice == "c"){
+        else if (choice == 'c'){
             //loop each item in array, from index 0 to counter, linear search for lowest value, print date & time at this index
             temp = 99999;
             for(int i=0;i<counter;i++){
@@ -66,7 +74,7 @@ int main(){
                 printf("Fewest steps: %s %s", dataArray[savedIndex].date, dataArray[savedIndex].time);
             }
         }
-        else if (choice == "d"){
+        else if (choice == 'd'){
             temp = -1;
             for(int i=0;i<counter;i++){
                 if (dataArray[i].steps>temp){
@@ -76,7 +84,7 @@ int main(){
                 printf("Largest steps: %s %s", dataArray[savedIndex].date, dataArray[savedIndex].time);
             }
         }
-        else if (choice == "e"){
+        else if (choice == 'e'){
             //loop each item in array, index 0 to counter, adding step counts then divide by counter, round as appropriate (DO NOT TRUNCATE)
             temp = 0;
             for(int i=0; i<counter; i++){
@@ -84,7 +92,7 @@ int main(){
             }
             printf("KIM ROUND THIS NUMBER\nMean step count: %i", temp/counter);
         }
-        else if (choice == "f"){
+        else if (choice == 'f'){
             //todo: find the longest period where steps is over 500
             //find streaks of 500+ steps, time taken and index where longest streak starts
             int longestStreak = 0;
@@ -114,13 +122,14 @@ int main(){
             printf("Longest period start: %s %s", dataArray[longestStreakStart].date, dataArray[longestStreakStart].time);
             printf("Longest period end: %s %s", dataArray[longestStreakStart+longestStreak].date, dataArray[longestStreakStart+longestStreak].time);
         }
-        else if (choice == "q"){
+        else if (choice == 'q'){
             //todo return 0 and quit
             return 0;
             break; //is this necessary? does "return 0" end the program?
         }
         else{
             //todo: they didn't choose a valid option
+            printf("Invalid input, try again\n");
         }
     }
 }
